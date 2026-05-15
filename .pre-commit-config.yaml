@@ -1,0 +1,18 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        types: [ts, javascript, json, markdown, yaml]
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=10240']
+
+  - repo: local
+    hooks:
+      - id: commit-msg-format
+        name: Validate commit message
+        language: script
+        entry: .githooks/commit-msg
+        stages: [commit-msg]
