@@ -1,6 +1,11 @@
 import re
+from functools import partial
+from http.server import HTTPServer
 
 import click
+
+from .cache_manager import CacheManager
+from .server import ProxyServer
 
 
 def validate_origin(ctx, param, value):
@@ -18,6 +23,7 @@ def validate_origin(ctx, param, value):
 @click.option("--clear-cache", is_flag=True, default=False)
 def main(port, origin, clear_cache):
     if clear_cache:
+        CacheManager().clear()
         click.echo("cache cleared")
         return
 
@@ -27,5 +33,9 @@ def main(port, origin, clear_cache):
             "Example: caching-proxy --port 3000 --origin http://dummyjson.com"
         )
 
+    cache = CacheManager()
+    handler = partial(ProxyServer, origin, cache)
+    httpd = HTTPServer(("", port), handler)
     click.echo(f"Starting caching proxy on port {port}...")
     click.echo(f"Forwarding requests to {origin}")
+    httpd.serve_forever()
