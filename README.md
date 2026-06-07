@@ -46,7 +46,7 @@ X-Cache: MISS  # forwarded to origin and cached
 
 ### Prerequisites
 
-- Python 3.11+
+- Python 3.13+
 - [uv](https://docs.astral.sh/uv/) (recommended) or pip
 
 ### Install
@@ -65,9 +65,15 @@ caching-proxy --help
 
 ### Install git hooks
 
-This project uses [pre-commit](https://pre-commit.com/) to manage hooks. Install them once after cloning:
+This project uses [pre-commit](https://pre-commit.com/) to manage hooks. Install it and set up the hooks once after cloning:
 
 ```bash
+# Install pre-commit (if not already installed)
+pip install pre-commit
+# or with uv:
+uv tool install pre-commit
+
+# Install the hooks
 pre-commit install --hook-type pre-commit --hook-type commit-msg
 ```
 
@@ -83,12 +89,10 @@ caching-server/
 ├── src/
 │   └── caching_proxy/
 │       ├── __init__.py
-│       ├── cli.py        # CLI entry point
-│       ├── server.py     # HTTP server and request forwarding
-│       ├── cache.py      # Cache read/write/clear logic
-│       └── logger.py     # Logging setup
+│       ├── cli.py             # CLI entry point
+│       ├── server.py          # HTTP server and request forwarding
+│       └── cache_manager.py   # Cache read/write/clear logic (Redis)
 ├── .githooks/
-│   ├── pre-commit
 │   └── commit-msg
 ├── .pre-commit-config.yaml
 └── pyproject.toml
