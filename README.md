@@ -2,6 +2,8 @@
 
 A CLI tool that starts a caching proxy server. It forwards requests to an origin server and caches the responses — subsequent identical requests are served from cache instead of hitting the origin.
 
+> Based on the [Caching Server](https://roadmap.sh/projects/caching-server) project from [roadmap.sh](https://roadmap.sh).
+
 ## How it works
 
 ```
